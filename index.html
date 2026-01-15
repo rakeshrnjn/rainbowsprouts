@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Career Path Finder</title>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/index.css" />
+	</head>
+	<body>
+		<div id="nav-mount"></div>
+
+		<main class="hero">
+			<h1>Career Path Finder</h1>
+			<p class="subtitle">
+				Discover careers aligned with your interests & personality
+			</p>
+
+			<div class="search-box">
+				<input
+					id="dreamInput"
+					type="text"
+					placeholder="Search your dream!!!"
+				/>
+				<button id="startBtn">Search</button>
+			</div>
+
+			<p class="intro">
+				Welcome to Rainbow Sprouts, a Career Path Finder. This is a
+				project created for the Step Up Loudoun competition by
+				middle-schoolers. We spent lots of time and effort on this
+				project, so keep that in mind.
+			</p>
+
+			<div class="kids-left"></div>
+
+			<div class="kids-right"></div>
+		</main>
+
+		<script src="js/common.js"></script>
+		<script>
+			const btn = document.getElementById("startBtn");
+			const input = document.getElementById("dreamInput");
+
+			btn.onclick = () => {
+				const value = input.value.trim();
+				if (!value) return alert("Please enter your dream career!");
+				localStorage.setItem("dreamCareer", value);
+				window.location.href = "quiz.html";
+			};
+		</script>
+	</body>
+</html>
