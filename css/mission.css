@@ -29,3 +29,10 @@ body {
   width: 100%;
   height: auto;
 }
+h1 {
+  color: #000;
+  -webkit-text-stroke: 2px #fff;
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
