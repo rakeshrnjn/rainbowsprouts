@@ -9,7 +9,37 @@
 	</head>
 	<body>
 		<div id="nav-mount"></div>
-		<p>Rainbow Sprouts - Careers</p>
+		<main class="careers">
+			<h1>Careers</h1>
+			<p class="subtitle">Explore some popular career paths</p>
+
+			<div class="grid">
+				<div class="card yellow">Doctor</div>
+				<div class="card green">Engineer</div>
+				<div class="card blue">Teacher</div>
+				<div class="card pink">Artist</div>
+				<div class="card purple">Scientist</div>
+				<div class="card orange">Game Developer</div>
+				<div class="card teal">Entrepreneur</div>
+				<div class="card sky">Astronaut</div>
+				<div class="card lime">Athlete</div>
+				<div class="card peach">Musician</div>
+				<div class="card violet">Writer</div>
+				<div class="card mint">Designer</div>
+			</div>
+		</main>
 		<script src="js/common.js"></script>
+		<script>
+			// Optional: click any career to start quiz with that choice
+			document.querySelectorAll(".card").forEach((card) => {
+				card.addEventListener("click", () => {
+					localStorage.setItem(
+						"dreamCareer",
+						card.textContent.trim()
+					);
+					window.location.href = "quiz.html";
+				});
+			});
+		</script>
 	</body>
 </html>

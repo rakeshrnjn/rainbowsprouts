@@ -1,0 +1,50 @@
+.careers {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.careers h1 {
+  font-size: 40px;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 36px;
+}
+
+.grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  padding: 26px 12px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Color variants inspired by the PDF */
+.yellow { background: #fff3b0; }
+.green  { background: #dff3c3; }
+.blue   { background: #d9f0ff; }
+.pink   { background: #ffd9e6; }
+.purple { background: #efe1ff; }
+.orange { background: #ffe2c6; }
+.teal   { background: #d8f3f0; }
+.sky    { background: #e7f2ff; }
+.lime   { background: #eef7c8; }
+.peach  { background: #ffe8d9; }
+.violet { background: #f1e8ff; }
+.mint   { background: #e4f7ef; }

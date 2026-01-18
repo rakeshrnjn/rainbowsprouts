@@ -9,7 +9,67 @@
 	</head>
 	<body>
 		<div id="nav-mount"></div>
-		<p>Rainbow Sprouts - Dashboard</p>
+		<main class="dashboard">
+			<section class="summary">
+				<h1>Your Career Dashboard</h1>
+				<p id="dreamLine"></p>
+
+				<div class="skills">
+					<div class="skill">
+						<span>Logic</span>
+						<div class="bar">
+							<div class="fill" style="width: 40%"></div>
+						</div>
+					</div>
+					<div class="skill">
+						<span>Creativity</span>
+						<div class="bar">
+							<div class="fill" style="width: 55%"></div>
+						</div>
+					</div>
+					<div class="skill">
+						<span>Communication</span>
+						<div class="bar">
+							<div class="fill" style="width: 35%"></div>
+						</div>
+					</div>
+					<div class="skill">
+						<span>Problem Solving</span>
+						<div class="bar">
+							<div class="fill" style="width: 50%"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="chat">
+				<h2>Chat with Coach</h2>
+
+				<div id="chatWindow" class="chat-window">
+					<div class="message coach">
+						Hi! I’m your Career Coach. Ask me anything about your
+						future! 😊
+					</div>
+				</div>
+
+				<div class="chat-input">
+					<input
+						id="chatInput"
+						type="text"
+						placeholder="Type your message..."
+					/>
+					<button id="sendBtn">Send</button>
+				</div>
+			</section>
+		</main>
+
 		<script src="js/common.js"></script>
+		<script src="js/chat.js"></script>
+		<script>
+			const dream = localStorage.getItem("dreamCareer");
+			document.getElementById(
+				"dreamLine"
+			).textContent = `Your dream career: ${dream || "Your Future"}`;
+		</script>
 	</body>
 </html>

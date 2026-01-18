@@ -1,0 +1,21 @@
+.sources {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.sources h1 {
+  font-size: 40px;
+  margin-bottom: 30px;
+}
+
+.source-list {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.source-list li {
+  margin-bottom: 12px;
+}
