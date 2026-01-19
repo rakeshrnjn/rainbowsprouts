@@ -1,27 +1,40 @@
 /* common.css */
 * {
-  box-sizing: border-box;
-  font-family: "Segoe UI", Arial, sans-serif;
+	box-sizing: border-box;
+	font-family: "Segoe UI", Arial, sans-serif;
 }
 
 body {
-  margin: 0;
-  background: #fff;
+	margin: 0;
+	background: #fff;
 }
 
 /* Navbar */
 .top-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 28px;
-  background: #fff;
-  border-bottom: 1px solid #eee;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 28px;
+	background: #fff;
+	border-bottom: 1px solid #eee;
 }
 
 .top-nav nav a {
-  margin: 0 12px;
-  text-decoration: none;
-  color: #222;
-  font-weight: 500;
+	margin: 0 12px;
+	text-decoration: none;
+	color: #222;
+	font-weight: 500;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 20px;
+}
+
+.footer {
+	text-align: center;
+	padding: 20px 0;
+	background-color: black;
+	color: #fff;
 }
