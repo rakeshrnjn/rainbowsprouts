@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	const navHTML = `
     <header class="top-nav">
       <div class="logo">
-        <img src="https://dummyimage.com/120x40/000/fff&text=Rainbow+Sprouts" alt="Rainbow Sprouts" />
+        <a href="index.html"> 
+          <img src="images/RainbowSproutsLogo.png" alt="Rainbow Sprouts Logo" />
+          </a>
       </div>
       <nav>
         <a href="index.html">Home</a>

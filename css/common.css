@@ -38,3 +38,7 @@ body {
 	background-color: black;
 	color: #fff;
 }
+.logo img {
+  height: 100px;
+  width: auto;
+}
