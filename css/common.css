@@ -1,4 +1,3 @@
-/* common.css */
 * {
 	box-sizing: border-box;
 	font-family: "Segoe UI", Arial, sans-serif;
@@ -7,9 +6,11 @@
 body {
 	margin: 0;
 	background: #fff;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
-/* Navbar */
 .top-nav {
 	display: flex;
 	align-items: center;
@@ -32,13 +33,27 @@ body {
 	padding: 0 20px;
 }
 
+.content-wrapper {
+	flex: 1;
+}
+
 .footer {
 	text-align: center;
 	padding: 20px 0;
 	background-color: black;
 	color: #fff;
 }
+
+.social-links img {
+	width: 30px;
+	height: 30px;
+}
+
+.social-links a {
+	margin: 0 5px;
+}
+
 .logo img {
-  height: 100px;
-  width: auto;
+	height: 100px;
+	width: auto;
 }
