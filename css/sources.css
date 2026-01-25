@@ -15,9 +15,10 @@ h1 {
 }
 .image-card {
   background-color: white;
-  border-radius: 12px;
+  border-radius: 5px;
   overflow: hidden;
   width: 300px;
+  padding: 5px;
 }
 .image-card img {
   width: 100%;
@@ -33,5 +34,6 @@ h1 {
 }
 .content-wrapper{
     background-color: #6ED4C7;
+    padding: 80px;
 
 }
