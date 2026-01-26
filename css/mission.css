@@ -51,26 +51,6 @@
   text-align: left;
 }
 
-
-.footer {
-  background-color: black;
-  color: #fff;
-}
-
-.social-links {
-  margin-bottom: 10px;
-}
-
-.social-links a {
-  margin: 0 5px;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.social-links img {
-  width: 30px;
-  height: 30px;
-}
 .video-button {
   position: relative;
   display: inline-block;
