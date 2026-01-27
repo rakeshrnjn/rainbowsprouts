@@ -42,3 +42,20 @@ main {
   text-align: center;
   padding: 20px 0;
 }
+
+.career-image {
+  display: block;
+  margin: 30px auto;
+  max-width: 900px;
+  width: 100%;
+  height: auto;
+}
+
+.career-description {
+  max-width: 900px;
+  margin: 20px auto 30px;
+  font-size: 20px;
+  line-height: 1.6;
+  text-align: center;
+  color: #000;
+}
