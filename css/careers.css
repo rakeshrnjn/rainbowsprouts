@@ -78,3 +78,18 @@ main {
 .software-engineer {
   background-color: #f0f8ff;
 }
+
+.software-engineer,
+.web-developer {
+  background-color: #ffffff;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
+
+  font-size: 18px;
+  line-height: 1.7;
+  color: #000;
+  
+  white-space: pre-line;
+}
