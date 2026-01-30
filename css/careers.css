@@ -75,7 +75,13 @@ main {
 .web-developer {
   white-space: pre-line;
 }
-.software-engineer,
+.software-engineer {
+  background-color: #7285a5;
+  max-width: 900px
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
+}
 .web-developer {
   background-color: #566d7e;
   max-width: 900px
@@ -84,13 +90,6 @@ main {
   border-radius: 12px;
 }
 
-.software-engineer,
-.web-developer {
-  background-color: #ffffff;
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 12px;
 
   font-size: 18px;
   line-height: 1.6;
