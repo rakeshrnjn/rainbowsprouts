@@ -70,3 +70,11 @@ main {
   line-height: 1.6;
   color: #000;
 }
+
+.software-engineer,
+.web-developer {
+  white-space: pre-line;
+}
+.software-engineer {
+  background-color: #f0f8ff;
+}
