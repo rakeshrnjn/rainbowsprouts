@@ -32,6 +32,9 @@ body {
 	margin: 0 auto;
 	padding: 0 20px;
 	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
 .content-wrapper {
@@ -46,23 +49,23 @@ body {
 	bottom: 0;
 }
 .footer {
-  background-color: black;
-  color: #fff;
+	background-color: black;
+	color: #fff;
 }
 
 .social-links {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .social-links a {
-  margin: 0 5px;
-  text-decoration: none;
-  cursor: pointer;
+	margin: 0 5px;
+	text-decoration: none;
+	cursor: pointer;
 }
 
 .social-links img {
-  width: 30px;
-  height: 30px;
+	width: 30px;
+	height: 30px;
 }
 .social-links img {
 	width: 30px;
