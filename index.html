@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -8,39 +8,51 @@
 		<link rel="stylesheet" href="css/index.css" />
 	</head>
 	<body>
-		<div id="nav-mount"></div>
+		<div class="container">
+			<div id="nav-mount"></div>
+			<div class="content-wrapper">
+				<main class="hero">
+					<h1>Career Path Finder</h1>
+					<p class="subtitle">
+						Discover careers aligned with your interests &
+						personality
+					</p>
 
-		<main class="hero">
-			<h1>Career Path Finder</h1>
-			<p class="subtitle">
-				Discover careers aligned with your interests & personality
-			</p>
+					<div class="search-box">
+						<input
+							id="dreamInput"
+							type="text"
+							placeholder="Search your dream!!!"
+						/>
+						<button id="startBtn">Search</button>
+					</div>
 
-			<div class="search-box">
-				<input
-					id="dreamInput"
-					type="text"
-					placeholder="Search your dream!!!"
-				/>
-				<button id="startBtn">Search</button>
+					<p class="intro">
+						Welcome to Rainbow Sprouts, a Career Path Finder. This
+						is a project created for the Step Up Loudoun competition
+						by middle-schoolers. We spent lots of time and effort on
+						this project, so keep that in mind.
+					</p>
+
+					<div class="kids-left">
+						<img
+							class="side-image"
+							src="./images/kid-one.png"
+							alt="Kid1"
+						/>
+					</div>
+
+					<div class="kids-right">
+						<img
+							class="side-image"
+							src="./images/kid-two.png"
+							alt="Kid"
+						/>
+					</div>
+				</main>
 			</div>
-
-			<p class="intro">
-				Welcome to Rainbow Sprouts, a Career Path Finder. This is a
-				project created for the Step Up Loudoun competition by
-				middle-schoolers. We spent lots of time and effort on this
-				project, so keep that in mind.
-			</p>
-
-			<div class="kids-left">
-				<img class="side-image" src="./images/kid-one.png" alt="Kid1" />
-			</div>
-
-			<div class="kids-right">
-				<img class="side-image" src="./images/kid-two.png" alt="Kid" />
-			</div>
-		</main>
-		<div id="footer-mount"></div>
+			<div id="footer-mount"></div>
+		</div>
 		<script src="js/common.js"></script>
 		<script>
 			const btn = document.getElementById("startBtn");
