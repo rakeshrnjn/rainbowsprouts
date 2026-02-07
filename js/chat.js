@@ -25,7 +25,7 @@ async function sendMessage() {
 	const typing = showTyping();
 
 	try {
-		const res = await fetch("/chat", {
+		const res = await fetch("http://localhost:3000/chat", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
@@ -38,13 +38,13 @@ async function sendMessage() {
 		typing.remove();
 		addMessage(
 			"coach",
-			data.reply || "Sorry, I had trouble answering that."
+			data.reply || "Sorry, I had trouble answering that.",
 		);
 	} catch (e) {
 		typing.remove();
 		addMessage(
 			"coach",
-			"Server not connected yet. (Backend will handle this)"
+			"Server not connected yet. (Backend will handle this)",
 		);
 	}
 }
