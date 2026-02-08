@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
@@ -47,8 +47,8 @@
 
 				<div id="chatWindow" class="chat-window">
 					<div class="message coach">
-						Hi! I’m your Career Coach. Ask me anything about your
-						future! 😊
+						Hi! I’m your Career Coach. Tell me your dream career to
+						start your strength check.
 					</div>
 				</div>
 
@@ -56,7 +56,7 @@
 					<input
 						id="chatInput"
 						type="text"
-						placeholder="Type your message..."
+						placeholder="Type a career or answer..."
 					/>
 					<button id="sendBtn">Send</button>
 				</div>
@@ -65,12 +65,289 @@
 		<div id="footer-mount"></div>
 
 		<script src="js/common.js"></script>
-		<script src="js/chat.js"></script>
 		<script>
+			const chatWindow = document.getElementById("chatWindow");
+			const input = document.getElementById("chatInput");
+			const sendBtn = document.getElementById("sendBtn");
+			const dreamLine = document.getElementById("dreamLine");
+
+			const quizState = {
+				stage: "awaitingCareer",
+				career: "",
+				questions: [],
+				currentIndex: 0,
+				answers: [],
+			};
+
+			const scoreLabels = {
+				logic: "Logic",
+				creativity: "Creativity",
+				communication: "Communication",
+				problemSolving: "Problem Solving",
+			};
+
+			function addMessage(type, text) {
+				const div = document.createElement("div");
+				div.className = `message ${type}`;
+				div.textContent = text;
+				chatWindow.appendChild(div);
+				chatWindow.scrollTop = chatWindow.scrollHeight;
+				return div;
+			}
+
+			function showTyping() {
+				return addMessage("typing", "thinking...");
+			}
+
+			function extractJson(text) {
+				if (!text) return null;
+				try {
+					return JSON.parse(text);
+				} catch (error) {
+					// fall through to fenced or brace extraction
+				}
+				const fenced =
+					text.match(/```json\s*([\s\S]*?)```/i) ||
+					text.match(/```\s*([\s\S]*?)```/);
+				if (fenced) {
+					try {
+						return JSON.parse(fenced[1]);
+					} catch (error) {
+						// fall through to brace extraction
+					}
+				}
+				const start = text.indexOf("{");
+				const end = text.lastIndexOf("}");
+				if (start >= 0 && end > start) {
+					try {
+						return JSON.parse(text.slice(start, end + 1));
+					} catch (error) {
+						return null;
+					}
+				}
+				return null;
+			}
+
+			async function postChat(payload) {
+				const res = await fetch("http://localhost:3000/chat", {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(payload),
+				});
+				const text = await res.text();
+				const json = extractJson(text);
+				if (!res.ok) {
+					return json || { reply: text || "Server error." };
+				}
+				return json || { reply: text };
+			}
+
+			function setDreamCareer(career) {
+				localStorage.setItem("dreamCareer", career);
+				dreamLine.textContent = `Your dream career: ${career}`;
+			}
+
+			function updateSkillBars(scores) {
+				const skillKeys = [
+					"logic",
+					"creativity",
+					"communication",
+					"problemSolving",
+				];
+				const skillCards = document.querySelectorAll(".skill");
+				skillCards.forEach((card, index) => {
+					const key = skillKeys[index];
+					const fill = card.querySelector(".fill");
+					const score = scores[key];
+					if (fill && typeof score === "number") {
+						fill.style.width = `${score * 10}%`;
+					}
+				});
+			}
+
+			async function startQuiz(career) {
+				quizState.stage = "loading";
+				quizState.career = career;
+				quizState.questions = [];
+				quizState.currentIndex = 0;
+				quizState.answers = [];
+
+				setDreamCareer(career);
+				const typing = showTyping();
+
+				try {
+					const data = await postChat({
+						action: "quizStart",
+						career,
+					});
+					typing.remove();
+
+					if (!data || !Array.isArray(data.questions)) {
+						addMessage(
+							"coach",
+							data && data.reply
+								? data.reply
+								: "I had trouble building your questions. Please try again.",
+						);
+						quizState.stage = "awaitingCareer";
+						return;
+					}
+
+					quizState.questions = data.questions;
+					quizState.stage = "asking";
+
+					if (data.intro) {
+						addMessage("coach", data.intro);
+					}
+					addMessage(
+						"coach",
+						"Answer each question with a number 1-5 (1 = not yet, 5 = always).",
+					);
+					askNextQuestion();
+				} catch (error) {
+					typing.remove();
+					addMessage(
+						"coach",
+						"Server not connected yet. Please start the backend.",
+					);
+					quizState.stage = "awaitingCareer";
+				}
+			}
+
+			function askNextQuestion() {
+				const question = quizState.questions[quizState.currentIndex];
+				if (!question) {
+					finishQuiz();
+					return;
+				}
+				addMessage(
+					"coach",
+					`Q${quizState.currentIndex + 1}: ${question}`,
+				);
+			}
+
+			async function finishQuiz() {
+				quizState.stage = "evaluating";
+				const typing = showTyping();
+
+				try {
+					const data = await postChat({
+						action: "quizEvaluate",
+						career: quizState.career,
+						answers: quizState.answers,
+					});
+					typing.remove();
+
+					if (data && data.summary) {
+						addMessage("coach", data.summary);
+					} else if (data && data.reply) {
+						addMessage("coach", data.reply);
+					}
+
+					if (data && data.scores) {
+						const normalizedScores = {};
+						Object.keys(data.scores).forEach((key) => {
+							const raw = data.scores[key];
+							const value = Number(raw);
+							if (Number.isFinite(value)) {
+								normalizedScores[key] = Math.max(
+									0,
+									Math.min(10, value),
+								);
+							}
+						});
+						const quizResult = {
+							career: quizState.career,
+							scores: normalizedScores,
+							answers: quizState.answers,
+						};
+						localStorage.setItem(
+							"quizResult",
+							JSON.stringify(quizResult),
+						);
+						updateSkillBars(normalizedScores);
+						Object.keys(normalizedScores).forEach((key) => {
+							const label = scoreLabels[key] || key;
+							addMessage(
+								"coach",
+								`${label}: ${normalizedScores[key]}/10`,
+							);
+						});
+					}
+
+					if (data && Array.isArray(data.roadmap)) {
+						addMessage("coach", "Roadmap:");
+						data.roadmap.forEach((step, index) => {
+							addMessage("coach", `${index + 1}. ${step}`);
+						});
+					}
+				} catch (error) {
+					typing.remove();
+					addMessage(
+						"coach",
+						"Server not connected yet. Please start the backend.",
+					);
+				}
+
+				addMessage(
+					"coach",
+					"Want another career? Type it to start again.",
+				);
+				quizState.stage = "awaitingCareer";
+			}
+
+			function handleAnswer(text) {
+				const value = Number(text);
+				if (!Number.isInteger(value) || value < 1 || value > 5) {
+					addMessage(
+						"coach",
+						"Please reply with a number from 1 to 5.",
+					);
+					return;
+				}
+				const question = quizState.questions[quizState.currentIndex];
+				quizState.answers.push({
+					question,
+					answer: value,
+				});
+				quizState.currentIndex += 1;
+				askNextQuestion();
+			}
+
+			function sendMessage() {
+				const text = input.value.trim();
+				if (!text) return;
+
+				addMessage("user", text);
+				input.value = "";
+
+				if (quizState.stage === "awaitingCareer") {
+					startQuiz(text);
+					return;
+				}
+
+				if (quizState.stage === "asking") {
+					handleAnswer(text);
+					return;
+				}
+
+				addMessage("coach", "I'm still working. Please wait a moment.");
+			}
+
+			sendBtn.onclick = sendMessage;
+			input.addEventListener("keydown", (e) => {
+				if (e.key === "Enter") sendMessage();
+			});
+
 			const dream = localStorage.getItem("dreamCareer");
-			document.getElementById(
-				"dreamLine"
-			).textContent = `Your dream career: ${dream || "Your Future"}`;
+			dreamLine.textContent = `Your dream career: ${dream || "Your Future"}`;
+
+			const quizResult = JSON.parse(
+				localStorage.getItem("quizResult") || "null",
+			);
+			if (quizResult && quizResult.scores) {
+				updateSkillBars(quizResult.scores);
+			}
 		</script>
 	</body>
 </html>
