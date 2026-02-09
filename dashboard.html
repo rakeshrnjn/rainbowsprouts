@@ -47,7 +47,7 @@
 
 				<div id="chatWindow" class="chat-window">
 					<div class="message coach">
-						Hi! I’m your Career Coach. Tell me your dream career to
+						Hi! I'm your Career Coach. Tell me your dream career to
 						start your strength check.
 					</div>
 				</div>
@@ -72,15 +72,14 @@
 			const dreamLine = document.getElementById("dreamLine");
 
 			const quizState = {
-				stage: "awaitingAge",
+				stage: "awaitingName",
+				name: "",
 				age: null,
 				career: "",
 				questions: [],
 				currentIndex: 0,
 				answers: [],
 			};
-
-
 
 			function addMessage(type, text) {
 				const div = document.createElement("div");
@@ -184,7 +183,7 @@
 								? data.reply
 								: "I had trouble building your questions. Please try again.",
 						);
-						quizState.stage = "awaitingAge";
+						quizState.stage = "awaitingName";
 						return;
 					}
 
@@ -205,7 +204,7 @@
 						"coach",
 						"Server not connected yet. Please start the backend.",
 					);
-					quizState.stage = "awaitingAge";
+					quizState.stage = "awaitingName";
 				}
 			}
 
@@ -285,9 +284,9 @@
 
 				addMessage(
 					"coach",
-					"Want to try another career? Tell me your age and dream!",
+					"Want to try another career? Tell me your name to start again!",
 				);
-				quizState.stage = "awaitingAge";
+				quizState.stage = "awaitingName";
 			}
 
 			function handleAnswer(text) {
@@ -315,12 +314,18 @@
 				addMessage("user", text);
 				input.value = "";
 
+				if (quizState.stage === "awaitingName") {
+					quizState.name = text;
+					quizState.stage = "awaitingAge";
+					addMessage("coach", `Nice to meet you, ${text}! How old are you?`);
+					return;
+				}
+
 				if (quizState.stage === "awaitingAge") {
 					const age = Number(text);
 					if (Number.isInteger(age) && age >= 5 && age <= 19) {
 						quizState.age = age;
-						quizState.stage = "awaitingCareer";
-						addMessage("coach", "Awesome! What do you dream of becoming?");
+						startQuiz(quizState.career);
 					} else {
 						addMessage("coach", "Please tell me your age (5-19).");
 					}
@@ -328,7 +333,9 @@
 				}
 
 				if (quizState.stage === "awaitingCareer") {
-					startQuiz(text);
+					quizState.career = text;
+					quizState.stage = "awaitingName";
+					addMessage("coach", "Great! What's your name?");
 					return;
 				}
 
@@ -346,13 +353,24 @@
 			});
 
 			const dream = localStorage.getItem("dreamCareer");
-			dreamLine.textContent = `Your dream career: ${dream || "Your Future"}`;
-
 			const quizResult = JSON.parse(
 				localStorage.getItem("quizResult") || "null",
 			);
-			if (quizResult && quizResult.scores) {
-				updateSkillBars(quizResult.scores);
+			
+			if (dream) {
+				quizState.career = dream;
+				dreamLine.textContent = `Your dream career: ${dream}`;
+				chatWindow.innerHTML = '';
+				addMessage("coach", `Hi! I'm your Career Coach. I see you want to become a ${dream}! What's your name?`);
+				
+				if (quizResult && quizResult.scores && quizResult.career === dream) {
+					updateSkillBars(quizResult.scores);
+				}
+			} else {
+				dreamLine.textContent = "Your dream career: Your Future";
+				chatWindow.innerHTML = '';
+				addMessage("coach", "Hi! I'm your Career Coach. What career do you dream of?");
+				quizState.stage = "awaitingCareer";
 			}
 		</script>
 	</body>
