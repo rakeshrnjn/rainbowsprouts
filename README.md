@@ -27,12 +27,28 @@ Website: https://www.rainbowsprouts.net/
         cd server
         npm install
         ```
-3. Update the server env file:
-    - Update `server/.env`
+3. Create the server env file:
+    - Create `server/.env`
     - Add:
         ```
-        GEMINI_API_KEY="your_key_here"
+        GEMINI_API_KEY="your_gemini_api_key_here"
         ```
+
+## Get a free student Gemini API key
+
+Important: Before creating the key, students should consult a parent or guardian about using a school or personal account.
+
+1. Go to Google AI Studio: https://aistudio.google.com/
+2. Sign in with a Google account (students can use a school or personal account).
+3. Open the API Keys section.
+4. Click "Create API key".
+5. Copy the key and paste it into `server/.env` as `GEMINI_API_KEY`.
+
+API key safety for students:
+
+- Never share your API key with anyone.
+- Do not post it in chat messages or screenshots.
+- Do not push it to GitHub or any public repo.
 
 ## Run locally
 
