@@ -15,18 +15,14 @@ function extractJson(text) {
 	if (!text) return null;
 	try {
 		return JSON.parse(text);
-	} catch (error) {
-		// fall through to fenced extraction
-	}
+	} catch (error) {}
 	const fenced =
 		text.match(/```json\s*([\s\S]*?)```/i) ||
 		text.match(/```\s*([\s\S]*?)```/);
 	if (fenced) {
 		try {
 			return JSON.parse(fenced[1]);
-		} catch (error) {
-			// fall through to brace extraction
-		}
+		} catch (error) {}
 	}
 	const start = text.indexOf("{");
 	const end = text.lastIndexOf("}");
@@ -42,7 +38,6 @@ function extractJson(text) {
 
 app.post("/chat", async (req, res) => {
 	const { message, context, action, career, answers } = req.body;
-	console.log("🚀 ~ message:", career);
 
 	try {
 		const model = genAI.getGenerativeModel(
@@ -70,7 +65,7 @@ Return ONLY valid JSON:
 		}
 
 		if (action === "quizEvaluate") {
-			prompt = `You are a friendly career coach for kids and teenagers. The young person (age ${answers.age || 'unknown'}) wants to become: "${career}".
+			prompt = `You are a friendly career coach for kids and teenagers. The young person (age ${answers.age || "unknown"}) wants to become: "${career}".
 Their answers: ${JSON.stringify(answers)}.
 Identify 4 key skills for ${career} and score them 0-10.
 Create an age-appropriate roadmap with 4-5 simple, actionable steps they can start now.

@@ -66,11 +66,13 @@ Website: https://www.rainbowsprouts.net/
 - `css/`: styling for each page
 - `js/`: page logic
 - `server/`: Node.js backend for AI chat and quiz
-  - `server.js`: Express server with Gemini AI integration
-  - `.env`: Environment variables (API key)
+    - `server.js`: Express server with Gemini AI integration
+    - `.env`: Environment variables (API key)
 
 ## Troubleshooting
 
 - If the chat does not respond, confirm the server is running on port 3000.
 - If you see an API error, verify `server/.env` has a valid `GEMINI_API_KEY`.
 - To start a new career, go back to `index.html` and enter a new career (this will clear previous results).
+
+## NOTE: DO not push your .env files to GitHub!
