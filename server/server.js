@@ -61,19 +61,23 @@ app.post("/chat", async (req, res) => {
 		)}\n\n${message}`;
 
 		if (action === "quizStart") {
-			prompt = `You are a career coach for students. The student wants to become: "${career}".
-Create 10 to 15 short, friendly questions to assess their current strengths.
-Return ONLY valid JSON with this shape:
-{"intro": "one short sentence", "questions": ["Q1", "Q2", "..."]}`;
+			prompt = `You are a friendly career coach for kids and teenagers. A young person wants to become: "${career}".
+Create 8-12 simple, fun questions they can rate from 1-5 (1 = not yet, 5 = yes always!).
+Questions should be easy to understand and about skills needed for ${career}.
+Example: "Do you enjoy helping people feel better?" or "Can you stay calm when things get tricky?"
+Return ONLY valid JSON:
+{"intro": "one friendly sentence", "questions": ["Q1", "Q2", "..."]}`;
 		}
 
 		if (action === "quizEvaluate") {
-			prompt = `You are a career coach for students. The student chose: "${career}".
-They answered questions with 1-5 ratings (1 = not yet, 5 = always).
+			prompt = `You are a friendly career coach for kids and teenagers. The young person (age ${answers.age || 'unknown'}) wants to become: "${career}".
 Their answers: ${JSON.stringify(answers)}.
-Return ONLY valid JSON with this shape:
-{"summary": "2-4 sentence summary", "scores": {"logic": 0-10, "creativity": 0-10, "communication": 0-10, "problemSolving": 0-10}, "roadmap": ["step1", "step2", "step3"]}.
-Be encouraging, specific, and concise.`;
+Identify 4 key skills for ${career} and score them 0-10.
+Create an age-appropriate roadmap with 4-5 simple, actionable steps they can start now.
+Be encouraging and specific!
+Return ONLY valid JSON:
+{"summary": "2-3 encouraging sentences", "scores": {"skill1": 0-10, "skill2": 0-10, "skill3": 0-10, "skill4": 0-10}, "roadmap": ["step1", "step2", "step3", "step4"]}.
+Use simple skill names for ${career}.`;
 		}
 
 		const result = await model.generateContent(prompt);
