@@ -1,7 +1,6 @@
 .content-wrapper {
 	background-color: #6ed4c7;
-	padding: 60px;
-	padding-top: 20px;
+	padding: 20px;
 }
 
 .image-card-row {
@@ -47,9 +46,4 @@
 
 .image-card:hover .image-caption {
 	color: white;
-}
-.content-wrapper {
-	background-color: #6ed4c7;
-	padding: 20px 20px 80px;
-	min-height: calc(100vh - 160px);
 }

@@ -75,7 +75,9 @@ body {
 
 .content-wrapper {
 	flex: 1;
-	min-height: 500px;
+	width: 100%;
+	min-height: calc(100vh - 235px);
+	position: relative;
 }
 
 .footer {
