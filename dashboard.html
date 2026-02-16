@@ -4,6 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Rainbow Sprouts - Dashboard</title>
+		<link rel="icon" type="image/png" href="images/RainbowSproutsLogo.png" />
 		<link rel="stylesheet" href="css/common.css" />
 		<link rel="stylesheet" href="css/dashboard.css" />
 	</head>
@@ -47,7 +48,7 @@
 
 				<div id="chatWindow" class="chat-window">
 					<div class="message coach">
-						Hi! I’m your Career Coach. Tell me your dream career to
+						Hi! I'm your Career Coach. Tell me your dream career to
 						start your strength check.
 					</div>
 				</div>
@@ -72,18 +73,13 @@
 			const dreamLine = document.getElementById("dreamLine");
 
 			const quizState = {
-				stage: "awaitingCareer",
+				stage: "awaitingName",
+				name: "",
+				age: null,
 				career: "",
 				questions: [],
 				currentIndex: 0,
 				answers: [],
-			};
-
-			const scoreLabels = {
-				logic: "Logic",
-				creativity: "Creativity",
-				communication: "Communication",
-				problemSolving: "Problem Solving",
 			};
 
 			function addMessage(type, text) {
@@ -148,19 +144,18 @@
 			}
 
 			function updateSkillBars(scores) {
-				const skillKeys = [
-					"logic",
-					"creativity",
-					"communication",
-					"problemSolving",
-				];
+				const skillKeys = Object.keys(scores);
 				const skillCards = document.querySelectorAll(".skill");
 				skillCards.forEach((card, index) => {
-					const key = skillKeys[index];
-					const fill = card.querySelector(".fill");
-					const score = scores[key];
-					if (fill && typeof score === "number") {
-						fill.style.width = `${score * 10}%`;
+					if (skillKeys[index]) {
+						const key = skillKeys[index];
+						const label = card.querySelector("span");
+						const fill = card.querySelector(".fill");
+						const score = scores[key];
+						if (label) label.textContent = key;
+						if (fill && typeof score === "number") {
+							fill.style.width = `${score * 10}%`;
+						}
 					}
 				});
 			}
@@ -189,7 +184,7 @@
 								? data.reply
 								: "I had trouble building your questions. Please try again.",
 						);
-						quizState.stage = "awaitingCareer";
+						quizState.stage = "awaitingName";
 						return;
 					}
 
@@ -201,7 +196,7 @@
 					}
 					addMessage(
 						"coach",
-						"Answer each question with a number 1-5 (1 = not yet, 5 = always).",
+						"Rate each question 1-5 (1 = not yet, 5 = yes always!).",
 					);
 					askNextQuestion();
 				} catch (error) {
@@ -210,7 +205,7 @@
 						"coach",
 						"Server not connected yet. Please start the backend.",
 					);
-					quizState.stage = "awaitingCareer";
+					quizState.stage = "awaitingName";
 				}
 			}
 
@@ -234,7 +229,7 @@
 					const data = await postChat({
 						action: "quizEvaluate",
 						career: quizState.career,
-						answers: quizState.answers,
+						answers: { age: quizState.age, responses: quizState.answers },
 					});
 					typing.remove();
 
@@ -267,16 +262,15 @@
 						);
 						updateSkillBars(normalizedScores);
 						Object.keys(normalizedScores).forEach((key) => {
-							const label = scoreLabels[key] || key;
 							addMessage(
 								"coach",
-								`${label}: ${normalizedScores[key]}/10`,
+								`${key}: ${normalizedScores[key]}/10`,
 							);
 						});
 					}
 
 					if (data && Array.isArray(data.roadmap)) {
-						addMessage("coach", "Roadmap:");
+						addMessage("coach", "Your Roadmap:");
 						data.roadmap.forEach((step, index) => {
 							addMessage("coach", `${index + 1}. ${step}`);
 						});
@@ -291,9 +285,9 @@
 
 				addMessage(
 					"coach",
-					"Want another career? Type it to start again.",
+					"Want to try another career? Tell me your name to start again!",
 				);
-				quizState.stage = "awaitingCareer";
+				quizState.stage = "awaitingName";
 			}
 
 			function handleAnswer(text) {
@@ -321,8 +315,28 @@
 				addMessage("user", text);
 				input.value = "";
 
+				if (quizState.stage === "awaitingName") {
+					quizState.name = text;
+					quizState.stage = "awaitingAge";
+					addMessage("coach", `Nice to meet you, ${text}! How old are you?`);
+					return;
+				}
+
+				if (quizState.stage === "awaitingAge") {
+					const age = Number(text);
+					if (Number.isInteger(age) && age >= 5 && age <= 19) {
+						quizState.age = age;
+						startQuiz(quizState.career);
+					} else {
+						addMessage("coach", "Please tell me your age (5-19).");
+					}
+					return;
+				}
+
 				if (quizState.stage === "awaitingCareer") {
-					startQuiz(text);
+					quizState.career = text;
+					quizState.stage = "awaitingName";
+					addMessage("coach", "Great! What's your name?");
 					return;
 				}
 
@@ -340,13 +354,24 @@
 			});
 
 			const dream = localStorage.getItem("dreamCareer");
-			dreamLine.textContent = `Your dream career: ${dream || "Your Future"}`;
-
 			const quizResult = JSON.parse(
 				localStorage.getItem("quizResult") || "null",
 			);
-			if (quizResult && quizResult.scores) {
-				updateSkillBars(quizResult.scores);
+			
+			if (dream) {
+				quizState.career = dream;
+				dreamLine.textContent = `Your dream career: ${dream}`;
+				chatWindow.innerHTML = '';
+				addMessage("coach", `Hi! I'm your Career Coach. I see you want to become a ${dream}! What's your name?`);
+				
+				if (quizResult && quizResult.scores && quizResult.career === dream) {
+					updateSkillBars(quizResult.scores);
+				}
+			} else {
+				dreamLine.textContent = "Your dream career: Your Future";
+				chatWindow.innerHTML = '';
+				addMessage("coach", "Hi! I'm your Career Coach. What career do you dream of?");
+				quizState.stage = "awaitingCareer";
 			}
 		</script>
 	</body>

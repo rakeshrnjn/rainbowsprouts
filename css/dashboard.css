@@ -11,6 +11,8 @@
   background: #f7fbff;
   border-radius: 20px;
   padding: 28px;
+  height: calc(100vh - 300px);
+  overflow-y: auto;
 }
 
 .summary h1 {
@@ -51,6 +53,7 @@
   background: #fff7ef;
   border-radius: 20px;
   padding: 20px;
+  height: calc(100vh - 300px);
 }
 
 .chat h2 {
