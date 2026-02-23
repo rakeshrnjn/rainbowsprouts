@@ -9,11 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <nav>
         <a href="index.html">Home</a>
+        <a href="quiz.html">Career Quiz</a>
         <a href="mission.html">Our Mission</a>
         <a href="who-we-are.html">Who we are</a>
         <a href="sources.html">Research</a>
         <a href="careers.html">Careers</a>
-        <a href="quiz.html">Career Quiz</a>
       </nav>
     </header>
   `;

@@ -39,7 +39,7 @@
 }
 
 .image-card:hover {
-	background-color: #000;
+	background-color: #003cff;
 	transform: translateY(-6px);
 	border: 1px solid white;
 }
