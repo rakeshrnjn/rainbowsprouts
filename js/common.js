@@ -12,7 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <a href="mission.html">Our Mission</a>
         <a href="who-we-are.html">Who we are</a>
         <a href="sources.html">Research</a>
-        <a href="careers.html">Career</a>
+        <a href="careers.html">Careers</a>
+        <a href="quiz.html">Career Quiz</a>
       </nav>
     </header>
   `;
