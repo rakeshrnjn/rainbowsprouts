@@ -9,6 +9,7 @@ Website: https://www.rainbowsprouts.net/
 ## What is included
 
 - Static site pages (HTML/CSS/JS)
+- **Login / logout** via Firebase Authentication (auth state in localStorage)
 - Dashboard with AI-driven career quiz and roadmap
 - Node.js server that connects to Gemini AI for dynamic questions and evaluation
 
@@ -90,5 +91,14 @@ API key safety for students:
 - If the chat does not respond, confirm the server is running on port 3000.
 - If you see an API error, verify `server/.env` has a valid `GEMINI_API_KEY`.
 - To start a new career, go back to `index.html` and enter a new career (this will clear previous results).
+
+## User management (Firebase)
+
+Login and logout use **Firebase Authentication**. Auth state is kept in **localStorage** so users stay signed in.
+
+1. Create a Firebase project and enable **Email/Password** sign-in (see [FIREBASE_SETUP.md](FIREBASE_SETUP.md)).
+2. Copy your Firebase config into `js/firebase-config.js` (or use `firebase-config.local.js` and `.gitignore` it).
+
+After that, the Login page and “Log out” in the nav work without any server-side auth code.
 
 ## NOTE: DO not push your .env files to GitHub!

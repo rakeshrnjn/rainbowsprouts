@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Rainbow Sprouts - Sign up</title>
+		<link
+			rel="icon"
+			type="image/png"
+			href="images/RainbowSproutsLogo.png"
+		/>
+		<link rel="stylesheet" href="css/common.css" />
+		<link rel="stylesheet" href="css/login.css" />
+		<link rel="stylesheet" href="css/signup.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div id="nav-mount"></div>
+			<div class="content-wrapper">
+				<main class="login-container">
+					<div class="signup-box">
+						<h1>Create your account</h1>
+						<p class="subtitle">
+							Sign up to save your progress and come back later
+						</p>
+
+						<form id="signupForm" class="auth-form signup-form">
+							<div class="form-group">
+								<label for="name">Name</label>
+								<input
+									id="name"
+									type="text"
+									placeholder="Enter your name"
+									required
+								/>
+							</div>
+
+							<div class="form-group">
+								<label for="email">Email</label>
+								<input
+									id="email"
+									type="email"
+									placeholder="Enter your email"
+									required
+								/>
+							</div>
+
+							<div class="form-group">
+								<label for="password">Password</label>
+								<input
+									id="password"
+									type="password"
+									placeholder="Create a password"
+									required
+								/>
+							</div>
+
+							<div class="form-group">
+								<label for="confirmPassword"
+									>Confirm password</label
+								>
+								<input
+									id="confirmPassword"
+									type="password"
+									placeholder="Type your password again"
+									required
+								/>
+							</div>
+
+							<p
+								class="subtitle full-width"
+								style="
+									font-size: 13px;
+									text-align: left;
+									margin-top: 0;
+								"
+							>
+								Tip: Choose a password that you haven’t used on
+								other sites. Ask a parent or guardian if you
+								need help keeping it safe.
+							</p>
+
+							<button type="submit" class="login-btn full-width">
+								Sign Up
+							</button>
+
+							<div
+								id="errorMessage"
+								class="error-message full-width"
+							></div>
+						</form>
+
+						<div class="signup-link">
+							<p>
+								Already have an account?
+								<a href="login.html">Log in</a>
+							</p>
+						</div>
+					</div>
+				</main>
+			</div>
+			<div id="footer-mount"></div>
+		</div>
+		<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+		<script src="js/firebase-config.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/signup.js"></script>
+	</body>
+</html>

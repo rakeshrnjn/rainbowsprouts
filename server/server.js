@@ -4,7 +4,6 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.use(cors());
