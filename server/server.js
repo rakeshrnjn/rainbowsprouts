@@ -46,7 +46,11 @@ function extractJson(text) {
 	return null;
 }
 
-app.post("/chat", async (req, res) => {
+app.get("/api/isalive", async (req, res) => {
+	res.send("Rainbowsprouts server is alive!");
+});
+
+app.post("/api/chat", async (req, res) => {
 	const { message, context, action, career, answers, age } = req.body;
 
 	try {

@@ -13,60 +13,62 @@
 		<link rel="stylesheet" href="css/dashboard.css" />
 	</head>
 	<body>
-		<div id="nav-mount"></div>
-		<main class="dashboard">
-			<section class="summary">
-				<h1>Your Career Dashboard</h1>
-				<p id="dreamLine"></p>
+		<div class="container">
+			<div id="nav-mount"></div>
+			<main class="content-wrapper dashboard">
+				<section class="summary">
+					<h1>Your Career Dashboard</h1>
+					<p id="dreamLine"></p>
 
-				<div class="skills">
-					<div class="skill">
-						<span>Logic</span>
-						<div class="bar">
-							<div class="fill" style="width: 0%"></div>
+					<div class="skills">
+						<div class="skill">
+							<span>Logic</span>
+							<div class="bar">
+								<div class="fill" style="width: 0%"></div>
+							</div>
+						</div>
+						<div class="skill">
+							<span>Creativity</span>
+							<div class="bar">
+								<div class="fill" style="width: 0%"></div>
+							</div>
+						</div>
+						<div class="skill">
+							<span>Communication</span>
+							<div class="bar">
+								<div class="fill" style="width: 0%"></div>
+							</div>
+						</div>
+						<div class="skill">
+							<span>Problem Solving</span>
+							<div class="bar">
+								<div class="fill" style="width: 0%"></div>
+							</div>
 						</div>
 					</div>
-					<div class="skill">
-						<span>Creativity</span>
-						<div class="bar">
-							<div class="fill" style="width: 0%"></div>
+				</section>
+
+				<section class="chat">
+					<h2>Chat with Coach</h2>
+
+					<div id="chatWindow" class="chat-window">
+						<div class="message coach">
+							Hi! I'm your Career Coach. Tell me your dream career
+							to start your strength check.
 						</div>
 					</div>
-					<div class="skill">
-						<span>Communication</span>
-						<div class="bar">
-							<div class="fill" style="width: 0%"></div>
-						</div>
-					</div>
-					<div class="skill">
-						<span>Problem Solving</span>
-						<div class="bar">
-							<div class="fill" style="width: 0%"></div>
-						</div>
-					</div>
-				</div>
-			</section>
 
-			<section class="chat">
-				<h2>Chat with Coach</h2>
-
-				<div id="chatWindow" class="chat-window">
-					<div class="message coach">
-						Hi! I'm your Career Coach. Tell me your dream career to
-						start your strength check.
+					<div class="chat-input">
+						<input
+							id="chatInput"
+							type="text"
+							placeholder="Type a career or answer..."
+						/>
+						<button id="sendBtn">Send</button>
 					</div>
-				</div>
-
-				<div class="chat-input">
-					<input
-						id="chatInput"
-						type="text"
-						placeholder="Type a career or answer..."
-					/>
-					<button id="sendBtn">Send</button>
-				</div>
-			</section>
-		</main>
+				</section>
+			</main>
+		</div>
 		<div id="footer-mount"></div>
 
 		<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -134,7 +136,7 @@
 			}
 
 			async function postChat(payload) {
-				const res = await fetch("http://localhost:4000/chat", {
+				const res = await fetch("https://rainbowsprouts.net/api/chat", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify(payload),

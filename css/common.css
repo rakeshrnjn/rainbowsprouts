@@ -62,7 +62,7 @@ body {
 
 /* Bootstrap-like containers */
 .container {
-	max-width: 1320px;
+	max-width: 1920px;
 	margin: 0 auto;
 	width: 100%;
 }
@@ -76,7 +76,7 @@ body {
 .content-wrapper {
 	flex: 1;
 	width: 100%;
-	min-height: calc(100vh - 235px);
+	min-height: calc(100vh - 214px);
 	position: relative;
 }
 
@@ -100,6 +100,10 @@ body {
 	margin: 0 5px;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+.copyrights {
+	margin: 0;
 }
 
 .social-links img {
