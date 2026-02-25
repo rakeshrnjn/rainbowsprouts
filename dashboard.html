@@ -4,7 +4,11 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Rainbow Sprouts - Dashboard</title>
-		<link rel="icon" type="image/png" href="images/RainbowSproutsLogo.png" />
+		<link
+			rel="icon"
+			type="image/png"
+			href="images/RainbowSproutsLogo.png"
+		/>
 		<link rel="stylesheet" href="css/common.css" />
 		<link rel="stylesheet" href="css/dashboard.css" />
 	</head>
@@ -19,25 +23,25 @@
 					<div class="skill">
 						<span>Logic</span>
 						<div class="bar">
-							<div class="fill" style="width: 40%"></div>
+							<div class="fill" style="width: 0%"></div>
 						</div>
 					</div>
 					<div class="skill">
 						<span>Creativity</span>
 						<div class="bar">
-							<div class="fill" style="width: 55%"></div>
+							<div class="fill" style="width: 0%"></div>
 						</div>
 					</div>
 					<div class="skill">
 						<span>Communication</span>
 						<div class="bar">
-							<div class="fill" style="width: 35%"></div>
+							<div class="fill" style="width: 0%"></div>
 						</div>
 					</div>
 					<div class="skill">
 						<span>Problem Solving</span>
 						<div class="bar">
-							<div class="fill" style="width: 50%"></div>
+							<div class="fill" style="width: 0%"></div>
 						</div>
 					</div>
 				</div>
@@ -69,6 +73,7 @@
 		<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 		<script src="js/firebase-config.js"></script>
+		<script src="js/auth-flow.js"></script>
 		<script src="js/common.js"></script>
 		<script>
 			const chatWindow = document.getElementById("chatWindow");
@@ -129,7 +134,7 @@
 			}
 
 			async function postChat(payload) {
-				const res = await fetch("http://localhost:3000/chat", {
+				const res = await fetch("http://localhost:4000/chat", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify(payload),
@@ -178,6 +183,7 @@
 					const data = await postChat({
 						action: "quizStart",
 						career,
+						age: quizState.age,
 					});
 					typing.remove();
 
@@ -233,7 +239,10 @@
 					const data = await postChat({
 						action: "quizEvaluate",
 						career: quizState.career,
-						answers: { age: quizState.age, responses: quizState.answers },
+						answers: {
+							age: quizState.age,
+							responses: quizState.answers,
+						},
 					});
 					typing.remove();
 
@@ -309,7 +318,8 @@
 								career: quizResult.career || "",
 								scores: quizResult.scores || {},
 								answers: quizResult.answers || [],
-								updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+								updatedAt:
+									firebase.firestore.FieldValue.serverTimestamp(),
 							},
 							{ merge: true },
 						)
@@ -317,7 +327,10 @@
 							console.warn("Could not save career data", err);
 						});
 				} catch (e) {
-					console.warn("Error accessing database to save career data", e);
+					console.warn(
+						"Error accessing database to save career data",
+						e,
+					);
 				}
 			}
 
@@ -349,7 +362,10 @@
 				if (quizState.stage === "awaitingName") {
 					quizState.name = text;
 					quizState.stage = "awaitingAge";
-					addMessage("coach", `Nice to meet you, ${text}! How old are you?`);
+					addMessage(
+						"coach",
+						`Nice to meet you, ${text}! How old are you?`,
+					);
 					return;
 				}
 
@@ -388,20 +404,30 @@
 			const quizResult = JSON.parse(
 				localStorage.getItem("quizResult") || "null",
 			);
-			
+
 			if (dream) {
 				quizState.career = dream;
 				dreamLine.textContent = `Your dream career: ${dream}`;
-				chatWindow.innerHTML = '';
-				addMessage("coach", `Hi! I'm your Career Coach. I see you want to become a ${dream}! What's your name?`);
-				
-				if (quizResult && quizResult.scores && quizResult.career === dream) {
+				chatWindow.innerHTML = "";
+				addMessage(
+					"coach",
+					`Hi! I'm your Career Coach. I see you want to become a ${dream}! What's your name?`,
+				);
+
+				if (
+					quizResult &&
+					quizResult.scores &&
+					quizResult.career === dream
+				) {
 					updateSkillBars(quizResult.scores);
 				}
 			} else {
 				dreamLine.textContent = "Your dream career: Your Future";
-				chatWindow.innerHTML = '';
-				addMessage("coach", "Hi! I'm your Career Coach. What career do you dream of?");
+				chatWindow.innerHTML = "";
+				addMessage(
+					"coach",
+					"Hi! I'm your Career Coach. What career do you dream of?",
+				);
 				quizState.stage = "awaitingCareer";
 			}
 		</script>
