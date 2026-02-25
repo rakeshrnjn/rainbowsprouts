@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			'<div class="logo"><a href="index.html"><img src="images/RainbowSproutsLogo.png" alt="Rainbow Sprouts Logo" /></a></div>' +
 			"<nav>" +
 			homeLink +
+			'<a href="quiz.html">Career Path Finder</a>' +
 			'<a href="mission.html">Our Mission</a>' +
 			'<a href="who-we-are.html">Who we are</a>' +
 			'<a href="sources.html">Research</a>' +
