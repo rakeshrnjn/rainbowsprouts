@@ -11,13 +11,13 @@
 	}
 
 	let firebaseConfig = {
-		apiKey: "AIzaSyBaPi-ZclXve_PEMP2pkGrxr_HA4vekvFA",
-		authDomain: "rainbowsprouts-ecc15.firebaseapp.com",
-		projectId: "rainbowsprouts-ecc15",
-		storageBucket: "rainbowsprouts-ecc15.appspot.com",
-		messagingSenderId: "614580322287",
-		appId: "1:614580322287:web:45b266e740f1f9b836c01a",
-		measurementId: "G-L6R154JL4V",
+		apiKey: "__FIREBASE_API_KEY__",
+		authDomain: "__FIREBASE_AUTH_DOMAIN__",
+		projectId: "__FIREBASE_PROJECT_ID__",
+		storageBucket: "__FIREBASE_STORAGE_BUCKET__",
+		messagingSenderId: "__FIREBASE_MESSAGING_SENDER_ID__",
+		appId: "__FIREBASE_APP_ID__",
+		measurementId: "__FIREBASE_MEASUREMENT_ID__",
 	};
 
 	// Allow override from a separate config (e.g. firebase-config.local.js) so you don't commit keys
@@ -28,7 +28,10 @@
 	try {
 		var app = firebase.initializeApp(firebaseConfig);
 		var auth = firebase.auth();
-		var db = typeof firebase.firestore === "function" ? firebase.firestore() : null;
+		var db =
+			typeof firebase.firestore === "function"
+				? firebase.firestore()
+				: null;
 
 		window.firebaseApp = app;
 		window.firebaseAuth = auth;

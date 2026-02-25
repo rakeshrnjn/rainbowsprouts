@@ -4,7 +4,11 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Career Path Finder</title>
-		<link rel="icon" type="image/png" href="images/RainbowSproutsLogo.png" />
+		<link
+			rel="icon"
+			type="image/png"
+			href="images/RainbowSproutsLogo.png"
+		/>
 		<link rel="stylesheet" href="css/common.css" />
 		<link rel="stylesheet" href="css/index.css" />
 	</head>
@@ -47,6 +51,11 @@
 			const input = document.getElementById("dreamInput");
 
 			btn.onclick = () => {
+				if (!window.firebaseAuth || !window.firebaseAuth.currentUser) {
+					window.location.href = "login.html";
+					return;
+				}
+
 				const value = input.value.trim();
 				if (!value) return alert("Please enter your dream career!");
 				// Clear only quiz-related data; preserve auth (user) for nav/firebase fallback

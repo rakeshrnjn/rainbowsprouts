@@ -1,6 +1,8 @@
 const express = require("express");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
@@ -8,6 +10,44 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 app.use(cors());
 app.use(express.json());
+
+// Serve firebase-config.js with env vars injected
+app.get("/js/firebase-config.js", (req, res) => {
+	const filePath = path.join(__dirname, "..", "js", "firebase-config.js");
+	fs.readFile(filePath, "utf8", (err, data) => {
+		if (err) {
+			console.error("Error reading firebase-config.js", err);
+			return res.status(500).send("Error loading config");
+		}
+		const config = data
+			.replace("__FIREBASE_API_KEY__", process.env.FIREBASE_API_KEY || "")
+			.replace(
+				"__FIREBASE_AUTH_DOMAIN__",
+				process.env.FIREBASE_AUTH_DOMAIN || "",
+			)
+			.replace(
+				"__FIREBASE_PROJECT_ID__",
+				process.env.FIREBASE_PROJECT_ID || "",
+			)
+			.replace(
+				"__FIREBASE_STORAGE_BUCKET__",
+				process.env.FIREBASE_STORAGE_BUCKET || "",
+			)
+			.replace(
+				"__FIREBASE_MESSAGING_SENDER_ID__",
+				process.env.FIREBASE_MESSAGING_SENDER_ID || "",
+			)
+			.replace("__FIREBASE_APP_ID__", process.env.FIREBASE_APP_ID || "")
+			.replace(
+				"__FIREBASE_MEASUREMENT_ID__",
+				process.env.FIREBASE_MEASUREMENT_ID || "",
+			);
+
+		res.set("Content-Type", "application/javascript");
+		res.send(config);
+	});
+});
+
 app.use(express.static(".."));
 
 function extractJson(text) {
