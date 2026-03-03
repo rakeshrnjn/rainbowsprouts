@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function renderNav(isAuthenticated, user) {
 		var homeLink = isAuthenticated ? '<a href="index.html">Home</a>' : "";
+		var careerPathLink = isAuthenticated ? '<a href="quiz.html">Career Path Advisor</a>' : "";
 		var authLink = isAuthenticated
 			? '<a href="#" id="logoutLink">Log out</a>'
 			: '<a href="login.html">Login</a>';
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			'<div class="logo"><a href="index.html"><img src="images/RainbowSproutsLogo.png" alt="Rainbow Sprouts Logo" /></a></div>' +
 			"<nav>" +
 			homeLink +
-			'<a href="quiz.html">Career Path Finder</a>' +
+			careerPathLink +
 			'<a href="mission.html">Our Mission</a>' +
 			'<a href="who-we-are.html">Who we are</a>' +
 			'<a href="sources.html">Research</a>' +
