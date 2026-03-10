@@ -11,18 +11,28 @@
 	}
 
 	let firebaseConfig = {
-		apiKey: "AIzaSyBaPi-ZclXve_PEMP2pkGrxr_HA4vekvFA",
-		authDomain: "rainbowsprouts-ecc15.firebaseapp.com",
-		projectId: "rainbowsprouts-ecc15",
-		storageBucket: "rainbowsprouts-ecc15.appspot.com",
-		messagingSenderId: "614580322287",
-		appId: "1:614580322287:web:45b266e740f1f9b836c01a",
-		measurementId: "G-L6R154JL4V",
+		apiKey: "YOUR_FIREBASE_API_KEY",
+		authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+		projectId: "YOUR_PROJECT_ID",
+		storageBucket: "YOUR_PROJECT_ID.appspot.com",
+		messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+		appId: "YOUR_APP_ID",
+		measurementId: "YOUR_MEASUREMENT_ID",
 	};
 
-	// Allow override from a separate config (e.g. firebase-config.local.js) so you don't commit keys
+	// Prefer a local override so project-specific values stay out of git.
 	if (window.RainbowSproutsFirebaseConfig) {
 		firebaseConfig = window.RainbowSproutsFirebaseConfig;
+	}
+
+	if (
+		!window.RainbowSproutsFirebaseConfig &&
+		firebaseConfig.apiKey === "YOUR_FIREBASE_API_KEY"
+	) {
+		console.warn(
+			"Firebase config missing. Create js/firebase-config.local.js from js/firebase-config.local.example.js.",
+		);
+		return;
 	}
 
 	try {
