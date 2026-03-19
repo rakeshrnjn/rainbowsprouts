@@ -729,11 +729,6 @@ recommendedMajors:[{majors:["Education"]}],
 traits:{education:5}
 },
 {
-name:"Special Education Teacher", medianSalary:65000, growthPercent:0,
-recommendedMajors:[{majors:["Special Education"]}],
-traits:{education:5}
-},
-{
 name:"Professor", medianSalary:80000, growthPercent:12,
 recommendedMajors:[{majors:["Subject Area","Education"]}],
 traits:{education:5}
@@ -1297,16 +1292,6 @@ traits:{design:5,engineering:3}
 name:"Interior Designer", medianSalary:62000, growthPercent:4,
 recommendedMajors:[{majors:["Interior Design"]}],
 traits:{design:5,creativity:4}
-},
-{
-name:"UX Designer", medianSalary:98000, growthPercent:16,
-recommendedMajors:[{majors:["UX Design","Human-Computer Interaction"]}],
-traits:{design:5,technology:4}
-},
-{
-name:"UI Designer", medianSalary:95000, growthPercent:16,
-recommendedMajors:[{majors:["UX/UI Design","Graphic Design"]}],
-traits:{design:5,technology:4}
 },
 {
 name:"Animator", medianSalary:98000, growthPercent:8,
